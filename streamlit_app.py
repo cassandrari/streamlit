@@ -38,8 +38,8 @@ selected_subcategories = st.multiselect("Select Sub Category", subcategories)
 
 if selected_subcategories:
     filtered_data = df[(df['Category'] == selected_category) & (df['Sub_Category'].isin(selected_subcategories))]
+    sales_data = filtered_data.groupby(filtered_data.index)['Sales'].sum()
 
-sales_data = filtered_data.groupby(filtered_data.index)['Sales'].sum()
 st.line_chart(sales_data)
 
 total_sales = filtered_data['Sales'].sum()
