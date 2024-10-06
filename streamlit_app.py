@@ -38,7 +38,7 @@ selected_subcategories = st.multiselect("Select Sub Category", subcategories)
 
 if selected_subcategories:
     filtered_data = df[(df['Category'] == selected_category) & (df['Sub_Category'].isin(selected_subcategories))]
-    sales_data = filtered_data.resample('M')['Sales'].sum()  # Summing sales per month
+    sales_data = filtered_data.resample('M')['Sales'].sum()
         
     st.line_chart(sales_data)
 
