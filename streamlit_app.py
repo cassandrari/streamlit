@@ -33,11 +33,11 @@ st.line_chart(sales_by_month, y="Sales")
 categories = df['Category'].unique()
 selected_category = st.selectbox("Select a Category", categories)
 
-subcategories = df[df['Category'] == selected_category]['Sub-Category'].unique()
-selected_subcategories = st.multiselect("Select Sub-Categories", subcategories)
+subcategories = df[df['Category'] == selected_category]['Sub_Category'].unique()
+selected_subcategories = st.multiselect("Select Sub Category", subcategories)
 
 if selected_subcategories:
-    filtered_data = df[(df['Category'] == selected_category) & (df['Sub-Category'].isin(selected_subcategories))]
+    filtered_data = df[(df['Category'] == selected_category) & (df['Sub_Category'].isin(selected_subcategories))]
 
     st.write("### (3) Show a line chart of sales for the selected items in (2)")
     sales_data = filtered_data.groupby(filtered_data.index)['Sales'].sum()
