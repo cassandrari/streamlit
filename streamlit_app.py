@@ -39,20 +39,17 @@ selected_subcategories = st.multiselect("Select Sub Category", subcategories)
 if selected_subcategories:
     filtered_data = df[(df['Category'] == selected_category) & (df['Sub_Category'].isin(selected_subcategories))]
 
-    st.write("### (3) Show a line chart of sales for the selected items in (2)")
-    sales_data = filtered_data.groupby(filtered_data.index)['Sales'].sum()
-    st.line_chart(sales_data)
+sales_data = filtered_data.groupby(filtered_data.index)['Sales'].sum()
+st.line_chart(sales_data)
 
-    st.write("### (4) Show three metrics for the selected items in (2): total sales, total profit, and overall profit margin (%)")
-    total_sales = filtered_data['Sales'].sum()
-    total_profit = filtered_data['Profit'].sum()
-    overall_profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
+total_sales = filtered_data['Sales'].sum()
+total_profit = filtered_data['Profit'].sum()
+overall_profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
 
-    st.metric("Total Sales", f"${total_sales:,.2f}")
-    st.metric("Total Profit", f"${total_profit:,.2f}")
-    st.metric("Overall Profit Margin (%)", f"{overall_profit_margin:.2f}%")
+st.metric("Total Sales", f"${total_sales:,.2f}")
+st.metric("Total Profit", f"${total_profit:,.2f}")
+st.metric("Overall Profit Margin (%)", f"{overall_profit_margin:.2f}%")
 
-    st.write("### (5) Use the delta option in the overall profit margin metric to show the difference between the overall average profit margin (all products across all categories)")
-    overall_average_margin = (df['Profit'].sum() / df['Sales'].sum() * 100) if df['Sales'].sum() > 0 else 0
-    delta = overall_profit_margin - overall_average_margin
-    st.metric("Overall Profit Margin (%)", f"{overall_profit_margin:.2f}%", delta=f"{delta:.2f}%", delta_color="inverse")
+overall_average_margin = (df['Profit'].sum() / df['Sales'].sum() * 100) if df['Sales'].sum() > 0 else 0
+delta = overall_profit_margin - overall_average_margin
+st.metric("Overall Profit Margin (%)", f"{overall_profit_margin:.2f}%", delta=f"{delta:.2f}%", delta_color="inverse")
