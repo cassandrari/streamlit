@@ -38,22 +38,17 @@ selected_subcategories = st.multiselect("Select Sub Category", subcategories)
 
 if selected_subcategories:
     filtered_data = df[(df['Category'] == selected_category) & (df['Sub_Category'].isin(selected_subcategories))]
-    
-    if filtered_data.empty:
-        st.warning("No data available for the selected category and subcategories.")
-    else:
-        # Assuming 'Order_Date' is the index and in datetime format
-        sales_data = filtered_data.resample('M')['Sales'].sum()  # Summing sales per month
+    sales_data = filtered_data.resample('M')['Sales'].sum()  # Summing sales per month
         
-        st.line_chart(sales_data)
+    st.line_chart(sales_data)
 
-        total_sales = filtered_data['Sales'].sum()
-        total_profit = filtered_data['Profit'].sum()
-        overall_profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
+    total_sales = filtered_data['Sales'].sum()
+    total_profit = filtered_data['Profit'].sum()
+    overall_profit_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
 
-        st.metric("Total Sales", f"${total_sales:,.2f}")
-        st.metric("Total Profit", f"${total_profit:,.2f}")
+    st.metric("Total Sales", f"${total_sales:,.2f}")
+    st.metric("Total Profit", f"${total_profit:,.2f}")
 
-        overall_average_margin = (df['Profit'].sum() / df['Sales'].sum() * 100) if df['Sales'].sum() > 0 else 0
-        delta = overall_profit_margin - overall_average_margin
-        st.metric("Overall Profit Margin (%)", f"{overall_profit_margin:.2f}%", delta=f"{delta:.2f}%", delta_color="inverse")
+    overall_average_margin = (df['Profit'].sum() / df['Sales'].sum() * 100) if df['Sales'].sum() > 0 else 0
+    delta = overall_profit_margin - overall_average_margin
+    st.metric("Overall Profit Margin (%)", f"{overall_profit_margin:.2f}%", delta=f"{delta:.2f}%", delta_color="inverse")
